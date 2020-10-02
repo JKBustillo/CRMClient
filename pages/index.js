@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div>
       <Layout>
-        <h1>Hola index</h1>
+        <h1 className="text-2xl text-gray-800 font-light">Clients</h1>
       </Layout>
     </div>
   )
