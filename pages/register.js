@@ -9,13 +9,19 @@ const Register = () => {
             name: '',
             lastName: '',
             email: '',
-            password: '',
+            password: ''
         },
         validationSchema: Yup.object({
-            name: Yup.string().required('Name is required'),
-            lastName: Yup.string().required('Lastname is required'),
-            email: Yup.string().email('Email is not valid').required('Email is required'),
-            password: Yup.string().required("Password can't be empty").min(6, 'The password must be at least 6 characters'),
+            name: Yup.string()
+                .required('Name is required'),
+            lastName: Yup.string()
+                .required('Lastname is required'),
+            email: Yup.string()
+                .email('Email is not valid')
+                .required('Email is required'),
+            password: Yup.string()
+                .required("Password can't be empty")
+                .min(6, 'The password must be at least 6 characters')
         }),
         onSubmit: values => {
             console.log(values);
@@ -64,6 +70,7 @@ const Register = () => {
                                 placeholder="Last name"
                                 value={formik.values.lastName}
                                 onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                                 className="shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             />
                         </div>
@@ -85,6 +92,7 @@ const Register = () => {
                                 placeholder="Email address"
                                 value={formik.values.email}
                                 onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                                 className="shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             />
                         </div>
@@ -106,6 +114,7 @@ const Register = () => {
                                 placeholder="Password"
                                 value={formik.values.password}
                                 onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                                 className="shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             />
                         </div>
