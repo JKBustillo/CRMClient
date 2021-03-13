@@ -1,9 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useMutation, gql } from '@apollo/client';
+
+const NEW_USER = gql`
+    mutation newUser($input: UserInput) {
+        newUser(input: $input) {
+            id
+            name
+            lastName
+            email
+        }
+    }
+`;
 
 const Register = () => {
+    const [message, setMessage] = useState(null);
+
+    const [newUser] = useMutation(NEW_USER);
+
+    const router = useRouter();
+
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -23,13 +42,50 @@ const Register = () => {
                 .required("Password can't be empty")
                 .min(6, 'The password must be at least 6 characters')
         }),
-        onSubmit: values => {
-            console.log(values);
+        onSubmit: async values => {
+            const { name, lastName, email, password } = values;
+
+            try {
+                const { data } = await newUser({
+                    variables: {
+                        input: {
+                            name,
+                            lastName,
+                            email,
+                            password
+                        }
+                    }
+                });
+
+                setMessage(`The user ${data.newUser.name} has been created successfully.`);
+
+                setTimeout(() => {
+                    setMessage(null);
+
+                    router.push('/login');
+                }, 4000);
+            } catch (error) {
+                setMessage(error.message);
+
+                setTimeout(() => {
+                    setMessage(null);
+                }, 4000);
+            }
         }
     });
 
+    const showMessage = () => {
+        return (
+            <div className="bg-white py-2 px-3 w-full my-3 max-w-sm text-center mx-auto">
+                <p>{message}</p>
+            </div>
+        )
+    };
+
     return (
         <Layout>
+            { message && showMessage() }
+
             <h1 className="text-center text-2xl text-white font-light">Register</h1>
 
             <div className="flex justify-center mt-5">
