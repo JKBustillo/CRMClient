@@ -22,7 +22,7 @@ export default function Home() {
 
   if (loading) return null;
 
-  if (!data.getClientsSeller) {
+  if (!data || !data.getClientsSeller) {
     router.push('/login');
 
     return null;
