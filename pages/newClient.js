@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
 import { useFormik } from 'formik';
@@ -31,6 +31,8 @@ const GET_CLIENTS_USER = gql`
 `;
 
 const NewClient = () => {
+    const [message, setMessage] = useState(null);
+
     const router = useRouter();
 
     const [newClient] = useMutation(NEW_CLIENT, {
@@ -84,14 +86,28 @@ const NewClient = () => {
                 console.log(data.newClient);
                 router.push('/');
             } catch (error) {
-                console.log(error);
+                setMessage(error.message);
+
+                setTimeout(() => {
+                    setMessage(null);
+                }, 2000);
             }
         }
     });
 
+    const showMessage = () => {
+        return (
+            <div className="bg-white py-2 px-3 w-full my-3 max-w-sm text-center mx-auto">
+                <p>{message}</p>
+            </div>
+        )
+    };
+
     return (
         <Layout>
             <h1 className="text-2xl text-gray-800 font-light">New Client</h1>
+
+            { message && showMessage() }
 
             <div className="flex justify-center mt-5">
                 <div className="w-full max-w-lg">
