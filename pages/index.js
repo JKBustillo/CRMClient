@@ -2,6 +2,7 @@ import Layout from '../components/Layout';
 import { useQuery, gql } from '@apollo/client';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Client from '../components/Client';
 
 const GET_CLIENTS_USER = gql`
   query getClientsSeller{
@@ -43,15 +44,15 @@ export default function Home() {
               <th className="w-1/5 py-2">Name</th>
               <th className="w-1/5 py-2">Enterprise</th>
               <th className="w-1/5 py-2">Email</th>
+              <th className="w-1/5 py-2">Delete</th>
             </tr>
           </thead>
           <tbody className="bg-white">
             {data.getClientsSeller.map(client => (
-              <tr key={client.id}>
-                <td className="border px-4 py-2">{client.name} {client.lastName}</td>
-                <td className="border px-4 py-2">{client.enterprise}</td>
-                <td className="border px-4 py-2">{client.email}</td>
-              </tr>
+              <Client
+                key={client.id}
+                client={client}
+              />
             ))}
           </tbody>
         </table>
