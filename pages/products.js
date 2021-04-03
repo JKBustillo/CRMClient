@@ -2,6 +2,7 @@ import React from 'react';
 import Layout from '../components/Layout';
 import { gql, useQuery } from '@apollo/client';
 import Product from '../components/Product';
+import Link from 'next/link';
 
 const GET_PRODUCTS = gql`
     query getProducts {
@@ -16,8 +17,6 @@ const GET_PRODUCTS = gql`
 
 const Products = () => {
     const { data, loading } = useQuery(GET_PRODUCTS);
-
-    console.log(data);
     
     if (loading) return 'Loading...';
 
@@ -25,6 +24,10 @@ const Products = () => {
         <div>
             <Layout>
                 <h1 className="text-2xl text-gray-800 font-light">Products</h1>
+
+                <Link href="/newProduct">
+                    <a className="bg-blue-800 py-2 px-5 mt-3 mb-3 inline-block text-white rounded text-sm uppercase font-bold hover:bg-gray-800">New Product</a>
+                </Link>
 
                 <table className="table-auto shadow-md mt-10 w-full w-lg">
                     <thead className="bg-gray-800">

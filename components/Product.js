@@ -1,6 +1,7 @@
 import React from 'react';
 import Swal from 'sweetalert2';
 import { gql, useMutation } from '@apollo/client';
+import Router from 'next/router';
 
 const DELETE_PRODUCT = gql`
     mutation deleteProduct($id: ID!) {
@@ -65,6 +66,13 @@ const Product = ({ product }) => {
         })
     };
 
+    const editProduct = () => {
+        Router.push({
+            pathname: "/editProduct/[id]",
+            query: { id }
+        });
+    };
+
     return (
         <tr>
             <td className="border px-4 py-2">{name}</td>
@@ -86,7 +94,7 @@ const Product = ({ product }) => {
                 <button
                     type="button"
                     className="flex justify-center items-center bg-green-600 py-2 px-4 w-full text-white rounded text-xs uppercase font-bold"
-                    // onClick={() => editClient()}
+                    onClick={() => editProduct()}
                 >
                     Edit
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 ml-2">
