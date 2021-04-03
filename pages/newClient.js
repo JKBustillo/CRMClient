@@ -83,7 +83,6 @@ const NewClient = () => {
                     }
                 });
 
-                console.log(data.newClient);
                 router.push('/');
             } catch (error) {
                 setMessage(error.message);
