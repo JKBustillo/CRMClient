@@ -23,7 +23,6 @@ const AssignProducts = () => {
     const { addProducts } = orderContext;
 
     useEffect(() => {
-        console.log(products);
         addProducts(products);
     }, [products]);
 
