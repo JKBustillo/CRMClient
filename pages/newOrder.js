@@ -17,6 +17,29 @@ const NEW_ORDER = gql`
     }
 `;
 
+const GET_ORDERS = gql`
+    query getOrdersSeller {
+        getOrdersSeller {
+            id
+            order {
+                id
+                amount
+                name
+            }
+            client {
+                id
+                name
+                lastName
+                email
+                telephone
+            }
+            seller
+            total
+            state
+        }
+    }
+`;
+
 const NewOrder = () => {
     const [message, setMessage] = useState(null);
     const orderContext = useContext(OrderContext);
@@ -25,7 +48,18 @@ const NewOrder = () => {
 
     const router = useRouter();
 
-    const [newOrder] = useMutation(NEW_ORDER);
+    const [newOrder] = useMutation(NEW_ORDER, {
+        update(cache, { data: { newOrder } }) {
+            const { getOrdersSeller } = cache.readQuery({ query: GET_ORDERS });
+
+            cache.writeQuery({
+                query: GET_ORDERS,
+                data: {
+                    getOrdersSeller: [...getOrdersSeller, newOrder]
+                }
+            });
+        }
+    });
 
     const validateOrder = () => {
         return !products.every(product => product.amount > 0) || total === 0 || client.length === 0 ? " opacity-50 cursor-not-allowed " : "";
