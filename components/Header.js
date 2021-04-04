@@ -31,7 +31,7 @@ const Header = () => {
     };
 
     return (
-        <div className="flex justify-between">
+        <div className="flex justify-between mb-5">
             <p className="mr-2">Hola, {name} {lastName}</p>
 
             <button
