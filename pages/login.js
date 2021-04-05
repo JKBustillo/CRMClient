@@ -45,11 +45,15 @@ const Login = () => {
                     }
                 });
 
-                const { token } = data.userAuth;
+                setTimeout(() => {
+                    const { token } = data.userAuth;
 
-                localStorage.setItem('token', token);
+                    localStorage.setItem('token', token);
+                }, 1000);
 
-                router.push('/');
+                setTimeout(() => {
+                    router.push('/');
+                }, 2000);
             } catch (error) {
                 setMessage(error.message);
 
